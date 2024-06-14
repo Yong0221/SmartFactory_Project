@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
     public void OnBoxGenerateBtnClkEvnt()
     {
         // 랜덤으로 프리팹을 선택합니다.
-        GameObject selectedPrefab = box2;//Random.Range(0, 2) == 0 ? box1 : box2;
+        GameObject selectedPrefab = Random.Range(0, 2) == 0 ? box1 : box2;
 
         // 선택된 프리팹을 지정된 위치에 생성합니다.
         GameObject newObject = Instantiate(selectedPrefab, spawnLocation.position, spawnLocation.rotation);

@@ -447,6 +447,7 @@ namespace box_Location
 
             if (loadCheck.isBoxLoading[0])
             {
+                isbox2 = false;
                 nowPos = GameObject.FindGameObjectWithTag("Box1").transform.position;
                 target1Pos = nowPos - box1_Origin.position;
                 target1Pos = transAxis(target1Pos);
