@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "652345705095",
+    "firebase_url": "https://smartfactory-6c1f5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smartfactory-6c1f5",
+    "storage_bucket": "smartfactory-6c1f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652345705095:android:3522ee81fa064d53522e22",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Myproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAESy7Ymq8XGgoYEEyZaFkq62eqk2Y8LWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

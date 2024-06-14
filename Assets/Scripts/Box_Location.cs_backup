@@ -1,0 +1,315 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class Box_Location : MonoBehaviour
+{
+    float[] box1Size;
+    float[] box2Size;
+    float box1Count;
+    float box2Count;
+    public float maxMoveBelt;
+    public float ConveyorSpeed;
+
+    public Transform box1_Origin;
+    public Transform box2_Origin;
+    Vector3 nowPos;
+    Vector3 target1Pos;
+    Vector3 target2Pos;
+    Vector3 robotTarget;
+    Vector3 LM_Origin; // 각각 컨베이어 벨트에서 받는 위치를 원점으로함
+    Vector3 X_Origin;
+    Vector3 Z_Origin;
+    Vector3 Load_Origin;
+    Vector3 moveBoxTarget;
+    Vector3 box1_deltaPos;
+
+    public loadBox loadCheck;
+
+    public Transform LMTransfer;
+    public Transform X_Transfer;
+    public Transform Z_Transfer;
+    public Transform Load_Transfer;
+
+    public GameObject Belt;
+    public Sensor arriveSensor;
+
+    bool isTransfer;
+
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        isTransfer = true;
+
+        box1Size = new float[] { -0.19f, 0.22f, 0.09f };
+        box2Size = new float[] { 0.271f, 0.181f, 0.0151f }; //사이즈 좌표 기준은 로봇 축 기준;
+        nowPos = new Vector3();
+        target1Pos = new Vector3();
+        target2Pos = new Vector3();
+        moveBoxTarget = new Vector3();
+        box1_deltaPos = new Vector3();
+        box1_deltaPos = Vector3.zero;
+
+        LM_Origin = LMTransfer.localPosition;
+        X_Origin = X_Transfer.localPosition;
+        Z_Origin = Z_Transfer.localPosition;
+        Load_Origin = Load_Transfer.localPosition;
+
+        //LMTransfer의 Y축 방향 이동을 위한  target좌표 재설정 작업
+
+    }
+    public void LMLoadBtnClkEvnt()
+    {
+        robotTarget = LMTransfer.localPosition;
+
+        robotTarget.z -= moveBoxTarget.x;
+        StartCoroutine(CoMoveLMCylinder(LM_Origin, robotTarget, 2));
+
+    }
+
+    public void LMOriginBtnClkEvnt()
+    {
+        robotTarget = LMTransfer.localPosition;
+        StartCoroutine(CoMoveLMCylinder(robotTarget, LM_Origin, 2));
+    }
+
+    public void XLoadBtnClkEvnt()
+    {
+        robotTarget = X_Origin;
+        robotTarget.x -= moveBoxTarget.y;
+        StartCoroutine(CoMoveXCylinder(X_Origin, robotTarget, 2));
+    }
+
+    public void XOriginBtnClkEvnt()
+    {
+        print(ToString(X_Origin));
+        robotTarget = X_Transfer.localPosition;
+        StartCoroutine(CoMoveXCylinder(robotTarget, X_Origin, 2));
+    }
+
+    public void ZLoadBtnClkEvnt()
+    {
+        print(ToString(X_Origin));
+        robotTarget = Z_Origin;
+        robotTarget.y -= -moveBoxTarget.z;
+        StartCoroutine(CoMoveZCylinder(Z_Origin, robotTarget, 2));
+    }
+    public void ZOriginBtnClkEvnt()
+    {
+        robotTarget = Z_Transfer.localPosition;
+        StartCoroutine(CoMoveZCylinder(robotTarget, Z_Origin, 2));
+    }
+    public void CylinderForwardBtnClkEvnt()
+    {
+        robotTarget = Load_Origin;
+        robotTarget.x = -0.2f;
+        StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, 0.5f));
+        robotTarget = Vector3.zero;
+    }
+
+    public void CylinderBackwardBtnClkEvnt()
+    {
+        robotTarget = Load_Origin;
+        robotTarget.x = -0.2f;
+        StartCoroutine(CoMoveLoadCylinder(Load_Origin, robotTarget, 0.5f));
+        robotTarget = Vector3.zero;
+        if (loadCheck.isBoxLoading[0])
+        {
+            loadCheck.isBoxLoading[0] = false;
+        }
+        else if (loadCheck.isBoxLoading[1])
+        {
+            nowPos = GameObject.FindGameObjectWithTag("Box2").transform.position;
+            target2Pos = nowPos - box2_Origin.position;// target pos z축: LM가이드 이동 값& X축: Z동작부 이동값 & Y축: X동작부 이동값;
+            target2Pos = transAxis(target2Pos);
+            moveBoxTarget = target2Pos;
+
+        }
+    }
+
+    public void beltOnBtnClkEvnt()
+    {
+        Vector3 belt_origin = Belt.transform.localPosition;
+        Vector3 belt_target = belt_origin;
+        belt_target.x = maxMoveBelt;
+        StartCoroutine(CoMoveBelt(belt_origin, belt_target, ConveyorSpeed));
+        //print(box1_deltaPos);
+    }
+
+    public Vector3 box1TargetTrans(Vector3 _box1Target)
+    {
+        box1Count += 1;
+        _box1Target.y -= box1Size[1]+0.01f;
+        if (box1Count % 25 == 0)//z축 변환
+        {
+            _box1Target.y = 0;
+            _box1Target.x = 0;
+            _box1Target.z += box1Size[2];
+        }
+        else if (box1Count % 5 == 0)//X축 변환
+        {
+            _box1Target.y = 0;
+            _box1Target.x += box1Size[0];
+        }//LM축 변환
+        print("＊현재 박스 개수: " + box1Count+"상자＊");
+
+        return _box1Target;
+    }
+    private Vector3 transAxis(Vector3 _targetPos)//x:LM동작부, y:Z동작부, Z: X동작부
+    {
+        Vector3 result = new Vector3();
+
+        result.x = _targetPos.z;
+        result.y = _targetPos.x;
+        result.z = _targetPos.y;
+
+        return result;
+    }
+    private string ToString(Vector3 v)
+    {
+        return string.Format("targetPos (X: {0:F7}, Y: {1:F7}, Z: {2:F7})", v.x, v.y, v.z);
+    }
+
+    IEnumerator CoMoveLMCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < movingTime)
+        {
+            float t = elapsedTime / movingTime;
+
+            LMTransfer.localPosition = Vector3.Lerp(_originPos, _targetPos, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        LMTransfer.GetComponent<DataRead_Cyl>().cylinderStatusData.usageCount += 1;
+        // Ensure the final position is exactly targetPos
+        //transform.position = moveBoxTarget;
+        if(_originPos == LM_Origin)
+        {
+            print("LoadSystem_LMTransfer - 적재지점으로 이동합니다...");
+        }
+        else
+        {
+            print("LoadSystem_LMTransfer - 대기지점으로 이동합니다...");
+        }
+    }
+
+    IEnumerator CoMoveXCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
+
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < movingTime)
+        {
+            float t = elapsedTime / movingTime;
+
+            X_Transfer.localPosition = Vector3.Lerp(_originPos, _targetPos, t);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        LMTransfer.GetComponent<DataRead_Cyl>().cylinderStatusData.usageCount += 1;
+        // Ensure the final position is exactly targetPos
+        //transform.position = moveBoxTarget;
+        if (_originPos == X_Origin)
+        {
+            print("LoadSystem_XTransfer - 적재지점으로 이동합니다...");
+        }
+        else
+        {
+            print("LoadSystem_XTransfer - 대기지점으로 이동합니다...");
+        }
+    }
+    IEnumerator CoMoveZCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
+
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < movingTime)
+        {
+            float t = elapsedTime / movingTime;
+
+            Z_Transfer.localPosition = Vector3.Lerp(_originPos, _targetPos, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        LMTransfer.GetComponent<DataRead_Cyl>().cylinderStatusData.usageCount += 1;
+        // Ensure the final position is exactly targetPos
+        //transform.position = moveBoxTarget;
+        if (_originPos == Z_Origin)
+        {
+            print("LoadSystem_ZTransfer - 적재지점으로 이동합니다...");
+        }
+        else
+        {
+            print("LoadSystem_ZTransfer - 대기지점으로 이동합니다...");
+        }
+    }
+    IEnumerator CoMoveLoadCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
+
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < movingTime)
+        {
+            float t = elapsedTime / movingTime;
+
+            Load_Transfer.localPosition = Vector3.Lerp(_originPos, _targetPos, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        LMTransfer.GetComponent<DataRead_Cyl>().cylinderStatusData.usageCount += 1;
+        // Ensure the final position is exactly targetPos
+        //transform.position = moveBoxTarget;
+        if (_originPos == Load_Origin)
+        {
+            print("LoadSystem_Load실린더 - 적재 대기 상태입니다...");
+        }
+        else
+        {
+            print("LoadSystem_Load실린더 - 적재 완료 상태입니다...");
+        }
+    }
+    IEnumerator CoMoveBelt(Vector3 _originPos, Vector3 _targetPos, float movingTime)
+
+    {
+        int justonce = 1;
+        float elapsedTime = 0f;
+        print("Conveyor_ConveyorBelt - 현재 작동중입니다...");
+        while (elapsedTime < movingTime)
+        {
+            float t = elapsedTime / movingTime;
+            Belt.transform.localPosition = Vector3.Lerp(_originPos, _targetPos, t);
+
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+
+            if (arriveSensor.isObjectDetected && justonce == 1)
+            {
+                justonce = 0;
+                yield return new WaitForSeconds(3f);
+            }
+        }
+        Belt.transform.localPosition = _originPos;
+        if (loadCheck.isBoxLoading[0])
+        {
+
+            nowPos = GameObject.FindGameObjectWithTag("Box1").transform.position;
+            target1Pos = nowPos - box1_Origin.position;
+            print(ToString(target1Pos));
+            target1Pos = transAxis(target1Pos); //target pos x yz -> 뒤죽박죽   lm x z
+            target1Pos += box1_deltaPos;// box c
+            moveBoxTarget = target1Pos;
+            print(ToString(moveBoxTarget));
+            box1_deltaPos = box1TargetTrans(box1_deltaPos);
+            print("[System] Box1 다음 위치 경로 계획 완료 : " + ToString(box1_deltaPos)+"으로 이동합니다.");
+        }
+        yield return null;
+    }
+}
