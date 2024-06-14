@@ -34,6 +34,7 @@ public class ConveyorCylinder : MonoBehaviour
     public CylinderStatusData cylinderStatusData;
 
     [Header("PLC")]
+    public string plcAddress;
     public int plcInputValue;
 
     private void Start()
@@ -63,13 +64,13 @@ public class ConveyorCylinder : MonoBehaviour
             switch (cylinder)
             {
                 case Cylinder.Conveyor_PushCylinder:
-                    if (//plcInputValues[0] > 0 &&
+                    if (plcInputValue > 0 &&
                         !isCylinderMoving && backwardSensor.isObjectDetected && objectSensor.isObjectDetected)
                     {
                         StartCoroutine(CylMove(true));                                             // 실린더 전진 
                     }
 
-                    if (//plcInputValues[1] > 0 &&
+                    if (plcInputValue == 0 &&
                         !isCylinderMoving && forwardSensor.isObjectDetected && returnSensor.isObjectDetected)
                     {
                         StartCoroutine(CylMove(false));                                           // 실린더 후진
@@ -77,13 +78,13 @@ public class ConveyorCylinder : MonoBehaviour
                     break;
 
                 case Cylinder.Conveyor_GateCylinder:
-                    if (//plcInputValues[0] > 0 &&
+                    if (plcInputValue > 0 &&
                         !isCylinderMoving && forwardSensor.isObjectDetected && objectSensor.isObjectDetected)
                     {
                         StartCoroutine(CylMove(true));                                             // 실린더 전진 
                     }
 
-                    if (//plcInputValues[1] > 0 &&
+                    if (plcInputValue == 0 &&
                         !isCylinderMoving && backwardSensor.isObjectDetected && returnSensor.isObjectDetected)
                     {
                         StartCoroutine(CylMove(false));                                           // 실린더 후진
@@ -96,6 +97,10 @@ public class ConveyorCylinder : MonoBehaviour
     public void OnCylinderButtonClickEvent(bool dir)
     {
         StartCoroutine(CylMove(dir));
+    }
+    public void OnCylinderReturnButtonClickEvent(bool dir)
+    {
+        StartCoroutine(CylMove(!dir));
     }
 
     IEnumerator CylMove(bool dir)

@@ -1,156 +1,20 @@
-[12:37:47] targetPos (X: 0.0000000, Y: -0.5200000, Z: 0.0000000)
-[12:37:47] Conveyor_PushCylinder - 후진 상태입니다
-[12:37:47] Conveyor_GateCylinder - 전진 상태입니다
-[12:38:10] [Sensor]Box2이(가) [물품도착확인센서]에 인식됩니다.
-[12:38:10] Conveyor_PushCylinder - 작동중입니다...
-[12:38:10] Conveyor_PushCylinder - 박스를 올바른 위치로 정렬합니다
-[12:38:11] Conveyor_GateCylinder - 작동중입니다...
-[12:38:11] Conveyor_GateCylinder - 통과를 위해 게이트를 엽니다
-[12:38:13] [Sensor]Box2이(가) [물품정렬확인센서]에 인식됩니다.
-[12:38:13] Conveyor_PushCylinder - 전진 상태입니다
-[12:38:14] Conveyor_GateCylinder - 후진 상태입니다
-[12:38:17] [Sensor]Box2이(가) [이동확인센서]에 인식됩니다.
-[12:38:21] LoadSystem_Load실린더 - 적재 대기 상태입니다...
-[12:38:22] 1
-[12:38:22] box2 다음 위치 경로 계획 완료 : targetPos (X: 0.0000000, Y: 0.0000000, Z: 0.0000000)
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:32] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:33] 벡터 재설정targetPos (X: -0.6240005, Y: 0.4758999, Z: 1.0465000)
-[12:38:33] 0&True
-[12:38:33] 좌표재설정targetPos (X: 1.0465000, Y: -0.6240005, Z: 0.4758999)
-[12:38:33] box2 다음 위치 경로 계획 완료 : targetPos (X: 0.0000000, Y: 0.0000000, Z: 0.0000000)
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:37] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:38:38] 벡터 재설정targetPos (X: -0.6240005, Y: 0.4758999, Z: 1.0465000)
-[12:38:38] 0&True
-[12:38:38] 좌표재설정targetPos (X: 1.0465000, Y: -0.6240005, Z: 0.4758999)
-[12:38:38] box2 다음 위치 경로 계획 완료 : targetPos (X: 0.0000000, Y: 0.0000000, Z: 0.0000000)
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:25] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] Assertion failed on expression: '!CompareApproximately(aScalar, 0.0F)'
-[12:39:26] 벡터 재설정targetPos (X: -0.6262138, Y: 0.4758999, Z: 1.0345000)
-[12:39:26] 0&True
-[12:39:26] 좌표재설정targetPos (X: 1.0345000, Y: -0.6262138, Z: 0.4758999)
-[12:39:26] box2 다음 위치 경로 계획 완료 : targetPos (X: 0.0000000, Y: 0.0000000, Z: 0.0000000)
-[12:43:20] NullReferenceException: Object reference not set to an instance of an object
-[12:43:20] NullReferenceException: Object reference not set to an instance of an object
+[14:31:48] targetPos (X: 0.0000000, Y: -0.5200000, Z: 0.0000000)
+[14:31:48] LoadingSys_LM_Transfer - 후진 상태입니다
+[14:31:48] Conveyor_PushCylinder - 후진 상태입니다
+[14:31:48] Conveyor_GateCylinder - 전진 상태입니다
+[14:31:48] LoadingSys_Z_Transfer - 후진 상태입니다
+[14:31:48] LoadingSys_LoadCylinder - 전진 상태입니다
+[14:31:52] Conveyor_PushCylinder - 작동중입니다...
+[14:31:52] Conveyor_PushCylinder - 박스를 올바른 위치로 정렬합니다
+[14:31:52] Conveyor_PushCylinder - 작동중입니다...
+[14:31:52] Conveyor_PushCylinder - 박스를 올바른 위치로 정렬합니다
+[14:31:54] Conveyor_PushCylinder - 전진 상태입니다
+[14:31:56] Conveyor_PushCylinder - 박스 정렬이 확인되었습니다...
+[14:31:56] Conveyor_PushCylinder - 다음 박스 정렬을 위해 원위치로 돌아갑니다.
+[14:31:57] Conveyor_PushCylinder - 후진 상태입니다
+[14:31:58] Conveyor_GateCylinder - 작동중입니다...
+[14:31:58] Conveyor_GateCylinder - 통과를 위해 게이트를 엽니다
+[14:32:00] Conveyor_GateCylinder - 물체 통과를 감지했습니다
+[14:32:00] Conveyor_GateCylinder - 다음 물체 정렬을 위해 게이트를 닫습니다
+[14:32:00] Conveyor_GateCylinder - 후진 상태입니다
+[14:32:02] Conveyor_GateCylinder - 전진 상태입니다

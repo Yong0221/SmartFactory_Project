@@ -112,11 +112,11 @@ public class DataManager : MonoBehaviour
         {
                 if (task.IsFaulted)
                 {
-                    print("데이터 로딩 실패");
+                    print("[Data] 데이터 로딩에 실패하였습니다.");
                 }
                 else if(task.IsCanceled)
                 {
-                    print("데이터 로딩 취소");
+                    print("[Data] 데이터 로딩이 취소되었습니다.");
                 }
 
                 else if(task.IsCompleted)
@@ -145,12 +145,8 @@ public class DataManager : MonoBehaviour
                                 data.scheduleData = JsonConvert.DeserializeObject<ProductionScheduleData>(json);
                                 break;
                          }
-
                         count++;
-                        print(json);
-
                      }
-                        print("데이터 로딩 성공");
                  }
             }
     }
@@ -191,12 +187,12 @@ public class DataManager : MonoBehaviour
         Task task = dbRef.Child("processData").Child("processStatus").SetValueAsync(input);
         if(task.IsCompleted)
         {
-            print("전송완료");
+            print("[Data] 데이터 전송을 완료하였습니다.");
             return true;
         }
         else
         {
-            print("전송실패");
+            print("[Data] 데이터 전송에 실패하였습니다.");
             return false;
         }
     }

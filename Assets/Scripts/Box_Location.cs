@@ -65,7 +65,11 @@ namespace box_Location
             isTransfer = true;
 
             box1Size = new float[] { 0.22f, 0.19f, 0.09f };
-            box2Size = new float[] { 0.271f, 0.181f, 0.0151f };
+            box2Size = new float[] { 0.27f, 0.18f, 0.15f };
+
+            rotOrigin = XRotate.rotation;
+            rot90Degrees = rotOrigin * Quaternion.Euler(0, -90f, 0);
+            rot0Degrees = rotOrigin;
 
             nowPos = new Vector3();
             target1Pos = new Vector3();
@@ -272,15 +276,15 @@ namespace box_Location
 
         public void XRotateBtnClkEvnt()
         {
-            StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, 1f));
+            StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, 0.5f));
         }
 
         public void XRotateOriginBtnClkEvnt()
         {
 
-            box2Count = 24;
+          
 
-            StartCoroutine(CoRotateCylinder(rot90Degrees, rot0Degrees, 1f));
+            StartCoroutine(CoRotateCylinder(rot90Degrees, rot0Degrees, 0.5f));
 
         }
 
@@ -288,38 +292,50 @@ namespace box_Location
         {
             if (isRotate && isbox2)
             {
+                if (rotateTime <= 0)
+                {
+                    Debug.LogError("rotateTime이 0보다 커야 합니다.");
+                    yield break;
+                }
+
                 float elapsedTime = 0f;
                 while (elapsedTime < rotateTime)
                 {
                     elapsedTime += Time.deltaTime;
-                    float t = Mathf.SmoothStep(0f, 1f, elapsedTime / rotateTime);
+                    float t = Mathf.Clamp01(elapsedTime / rotateTime);
                     XRotate.rotation = Quaternion.Lerp(_origin, _rot, t);
                     yield return null;
                 }
                 XRotate.rotation = _rot;
+
                 if (loadCheck.isBoxLoading[1])
                 {
                     GameObject gameobject = GameObject.FindGameObjectWithTag("Box2");
-                    gameObject.transform.SetParent(null);
+                    if (gameobject == null)
+                    {
+                        Debug.LogError("Box2 태그를 가진 게임 오브젝트를 찾을 수 없습니다.");
+                        yield break;
+                    }
 
+                    gameobject.transform.SetParent(null);
 
                     nowPos = gameobject.transform.position;
 
-
                     target2Pos = nowPos - box2Origin_W.position;
-                    print("벡터 재설정" + ToString(target2Pos));
+                    Debug.Log("벡터 재설정: " + target2Pos.ToString());
                     target2Pos = transAxis(target2Pos);
                     box2_deltaPos = box2TargetTrans(box2_deltaPos);
                     target2Pos += box2_deltaPos;
-                    print("좌표재설정" + ToString(target2Pos));
+                    Debug.Log("좌표재설정: " + target2Pos.ToString());
                     moveBoxTarget = target2Pos;
 
-                    Debug.Log($"box2 다음 위치 경로 계획 완료 : {ToString(box2_deltaPos)}");
+                    Debug.Log($"box2 다음 위치 경로 계획 완료: {box2_deltaPos.ToString()}");
                     gameobject.transform.SetParent(LoadFixedPart.transform);
                 }
             }
             yield return null;
         }
+
 
 
         IEnumerator CoMoveLMCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)

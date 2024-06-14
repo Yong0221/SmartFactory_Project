@@ -104,7 +104,7 @@ namespace mxComponent
         {
             mxComponent = new ActUtlType64();                           //mxC 초기설정1
             mxComponent.ActLogicalStationNumber = 1;               //mxC 초기설정2
-            log.text = "[System][PLC] 초기 설정: \n PLC - 연결 해지 상태입니다.";
+            log.text = "[PLC] 초기 설정: \n PLC - 연결 해지 상태입니다.";
         }
 
         public void Update()
@@ -139,7 +139,7 @@ namespace mxComponent
 
                 pushCylinder.plcInputValue = new_ydata[20] - 48; //Y20
 
-                gateCylinder.plcInputValue = new_ydata[31] - 48; //Y31
+                gateCylinder.plcInputValue = new_ydata[30] - 48; //Y30
 
                 arriveSensor_C.plcInputValue = new_xdata[1]-48; //X1
                 alignSensor_C.plcInputValue = new_xdata[2]-48; //X2
@@ -194,13 +194,13 @@ namespace mxComponent
                     int returnValue1 = mxComponent.Close();
                     if (returnValue1 == 0)
                     {
-                        print("[System][PLC] PLC 연결이 해지되었습니다.");
+                        print("[PLC] PLC 연결이 해지되었습니다.");
                         log.text = "PLC 연결이 해지되었습니다.";
                         connection = Connection.Disconnected;
                     }
                     else
                     {
-                        print("[System][PLC] PLC 연결 해지에 실패했습니다. | returnValue: 0x" + returnValue1.ToString("X"));//16진수로 변경
+                        print("[PLC] PLC 연결 해지에 실패했습니다. | returnValue: 0x" + returnValue1.ToString("X"));//16진수로 변경
                         log.text = "PLC 연결 해지에 실패했습니다. | returnValue: 0x" + returnValue1.ToString("X");
                     }
                     break;
@@ -209,7 +209,7 @@ namespace mxComponent
                     int returnValue2 = mxComponent.Open();                // 정상종료: 0 / 이상종료: 에러코드 반환
                     if (returnValue2 == 0)
                     {
-                        print("[System][PLC] PLC 연결에 성공하였습니다.");
+                        print("[PLC] PLC 연결에 성공하였습니다.");
                         log.text = "PLC 연결에 성공하였습니다.";
 
                         connection = Connection.Connected;                 //초기화
@@ -218,7 +218,7 @@ namespace mxComponent
                     }
                     else
                     {
-                        print($"[System][PLC] PLC 연결에 실패하였습니다.| returnValue: 0x{returnValue2.ToString("X")}");
+                        print($"[PLC] PLC 연결에 실패하였습니다.| returnValue: 0x{returnValue2.ToString("X")}");
                         log.text = "PLC 연결에 실패했습니다. | returnValue: 0x" + returnValue2.ToString("X");
                         // 오류문자 16진수 변환해 출력
                     }
@@ -286,7 +286,7 @@ namespace mxComponent
                 stopBtn.image.color = Color.white;
 
                     SetDevice("X0", 1);
-                print("[System][PLC] PLC 연동을 시작합니다.");
+                print("[PLC] PLC 연동을 시작합니다.");
                 }
                 else
                 {
@@ -300,7 +300,7 @@ namespace mxComponent
             startBtn.image.color = Color.white;
             stopBtn.image.color = Color.red;
             SetDevice("X5", 1);
-                print("[System][PLC] PLC 연동을 중지합니다.");
+                print("[PLC] PLC 연동을 중지합니다.");
             }
             else
             {
@@ -316,7 +316,7 @@ namespace mxComponent
                 emergencyBtn.image.color = Color.red;
 
                 SetDevice("X99", 1);
-                print("[System][PLC][Alert] PLC 비상 정지 버튼이 활성화되었습니다.");
+                print("[PLC][Alert] PLC 비상 정지 버튼이 활성화되었습니다.");
             }
             else
             {
