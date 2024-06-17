@@ -16,12 +16,18 @@ namespace box_Location
         bool isRotate;
 
         public Box_Location instance;
+
         float[] box1Size;
         float[] box2Size;
         float box1Count;
         float box2Count;
         public float maxMoveBelt;
         public float ConveyorSpeed;
+        public float box1MoveTime;
+        public float box2MoveTime;
+        float cylinderTime;
+        public float loadCylinderTime;
+        public float rotateTime;
 
         public Transform box1_Origin;
         public Transform box2Origin_W;
@@ -57,11 +63,15 @@ namespace box_Location
 
         public TMP_Text box1CountDisplay;
         public TMP_Text box2CountDisplay;
-
+        public bool isConveyorMove;
         bool isTransfer;
 
         void Start()
         {
+            box1MoveTime = 2f;
+            box2MoveTime = 1f;
+            rotateTime = 0.5f;
+            loadCylinderTime = 0.5f;
             isTransfer = true;
 
             box1Size = new float[] { 0.22f, 0.19f, 0.09f };
@@ -98,14 +108,14 @@ namespace box_Location
             temp.z -= moveBoxTarget.x;
             robotTarget = temp;
             //Debug.Log($"LMLoadBtnClkEvnt - Origin: {ToString(LM_Origin)}, Target: {ToString(robotTarget)}");
-            StartCoroutine(CoMoveLMCylinder(LM_Origin, robotTarget, 2));
+            StartCoroutine(CoMoveLMCylinder(LM_Origin, robotTarget, cylinderTime));
         }
 
         public void LMOriginBtnClkEvnt()
         {
             //Debug.Log($"LMOriginBtnClkEvnt - Origin: {ToString(LM_Origin)}, Current Position: {ToString(LMTransfer.localPosition)}");
             robotTarget = LM_Origin;
-            StartCoroutine(CoMoveLMCylinder(LMTransfer.localPosition, LM_Origin, 2));
+            StartCoroutine(CoMoveLMCylinder(LMTransfer.localPosition, LM_Origin, cylinderTime));
         }
 
         public void XLoadBtnClkEvnt()
@@ -113,14 +123,14 @@ namespace box_Location
             robotTarget = X_Origin;
             robotTarget.x -= moveBoxTarget.y;
             // Debug.Log($"XLoadBtnClkEvnt - Origin: {ToString(X_Origin)}, Target: {ToString(robotTarget)}");
-            StartCoroutine(CoMoveXCylinder(X_Origin, robotTarget, 2));
+            StartCoroutine(CoMoveXCylinder(X_Origin, robotTarget, cylinderTime));
         }
 
         public void XOriginBtnClkEvnt()
         {
             // Debug.Log($"XOriginBtnClkEvnt - Origin: {ToString(X_Origin)}, Current Position: {ToString(X_Transfer.localPosition)}");
             robotTarget = X_Origin;
-            StartCoroutine(CoMoveXCylinder(X_Transfer.localPosition, X_Origin, 2));
+            StartCoroutine(CoMoveXCylinder(X_Transfer.localPosition, X_Origin, cylinderTime));
         }
 
         public void ZLoadBtnClkEvnt()
@@ -129,14 +139,14 @@ namespace box_Location
             robotTarget = Z_Origin;
             robotTarget.y -= moveBoxTarget.z;
 
-            StartCoroutine(CoMoveZCylinder(Z_Origin, robotTarget, 2));
+            StartCoroutine(CoMoveZCylinder(Z_Origin, robotTarget, cylinderTime));
         }
 
         public void ZOriginBtnClkEvnt()
         {
             // Debug.Log($"ZOriginBtnClkEvnt - Origin: {ToString(Z_Origin)}, Current Position: {ToString(Z_Transfer.localPosition)}");
             robotTarget = Z_Origin;
-            StartCoroutine(CoMoveZCylinder(Z_Transfer.localPosition, Z_Origin, 2));
+            StartCoroutine(CoMoveZCylinder(Z_Transfer.localPosition, Z_Origin, cylinderTime));
         }
 
         public void CylinderForwardBtnClkEvnt()
@@ -147,14 +157,14 @@ namespace box_Location
                 isRotate = false;
             else if (box2Count % 24 % 10 == 0)
                 isRotate = true;
-            StartCoroutine(CoMoveLoadCylinder(Load_Origin, robotTarget, 0.5f));
+            StartCoroutine(CoMoveLoadCylinder(Load_Origin, robotTarget, loadCylinderTime));
         }
 
         public void CylinderBackwardBtnClkEvnt()
         {
             robotTarget = Load_Origin;
             robotTarget.x = -0.195f;
-            StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, 0.5f));
+            StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, loadCylinderTime));
             robotTarget = Vector3.zero;
 
             if (loadCheck.isBoxLoading[0])
@@ -164,7 +174,7 @@ namespace box_Location
                 Rigidbody rb = box1.GetComponent<Rigidbody>();
                 ;
                 rb.isKinematic = true;
-                StartCoroutine(Timer(rb, 0.5f));
+                StartCoroutine(Timer(rb, loadCylinderTime));
                 box1.tag = "Untagged";
                 loadCheck.isBoxLoading[0] = false;
             }
@@ -175,7 +185,7 @@ namespace box_Location
                 Rigidbody rb = box2.GetComponent<Rigidbody>();
 
                 rb.isKinematic = true;
-                StartCoroutine(Timer(rb, 0.5f));
+                StartCoroutine(Timer(rb, loadCylinderTime));
                 box2.tag = "Untagged";
                 loadCheck.isBoxLoading[1] = false;
             }
@@ -276,7 +286,7 @@ namespace box_Location
 
         public void XRotateBtnClkEvnt()
         {
-            StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, 0.5f));
+            StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, rotateTime));
         }
 
         public void XRotateOriginBtnClkEvnt()
@@ -284,25 +294,25 @@ namespace box_Location
 
           
 
-            StartCoroutine(CoRotateCylinder(rot90Degrees, rot0Degrees, 0.5f));
+            StartCoroutine(CoRotateCylinder(rot90Degrees, rot0Degrees, rotateTime));
 
         }
 
-        IEnumerator CoRotateCylinder(Quaternion _origin, Quaternion _rot, float rotateTime)
+        IEnumerator CoRotateCylinder(Quaternion _origin, Quaternion _rot, float _rotateTime)
         {
             if (isRotate && isbox2)
             {
-                if (rotateTime <= 0)
+                if (_rotateTime <= 0)
                 {
-                    Debug.LogError("rotateTime이 0보다 커야 합니다.");
+                    Debug.LogError("_rotateTime이 0보다 커야 합니다.");
                     yield break;
                 }
 
                 float elapsedTime = 0f;
-                while (elapsedTime < rotateTime)
+                while (elapsedTime < _rotateTime)
                 {
                     elapsedTime += Time.deltaTime;
-                    float t = Mathf.Clamp01(elapsedTime / rotateTime);
+                    float t = Mathf.Clamp01(elapsedTime / _rotateTime);
                     XRotate.rotation = Quaternion.Lerp(_origin, _rot, t);
                     yield return null;
                 }
@@ -340,6 +350,7 @@ namespace box_Location
 
         IEnumerator CoMoveLMCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
         {
+            isConveyorMove = true;
             float elapsedTime = 0f;
             while (elapsedTime < movingTime)
             {
@@ -358,6 +369,7 @@ namespace box_Location
                 print("LoadSystem_LMTransfer - 대기지점으로 이동합니다...");
             }
             LMTransfer.GetComponent<DataRead_Cyl>().cylinderStatusData.usageCount += 1;
+            isConveyorMove = false;
         }
 
         IEnumerator CoMoveXCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
@@ -447,6 +459,9 @@ namespace box_Location
 
             if (loadCheck.isBoxLoading[0])
             {
+                
+                cylinderTime = box1MoveTime;
+                print(cylinderTime + "s");
                 isbox2 = false;
                 nowPos = GameObject.FindGameObjectWithTag("Box1").transform.position;
                 target1Pos = nowPos - box1_Origin.position;
@@ -459,6 +474,8 @@ namespace box_Location
             else if (loadCheck.isBoxLoading[1])
             {
                 isbox2 = true;
+                cylinderTime=box2MoveTime;
+                print(cylinderTime+"s");
 
 
                 box2Count++;
