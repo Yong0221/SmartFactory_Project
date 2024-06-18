@@ -137,7 +137,7 @@ namespace box_Location
         {
             // Debug.Log($"ZLoadBtnClkEvnt - Origin: {ToString(Z_Origin)}, Target: {ToString(robotTarget)}");
             robotTarget = Z_Origin;
-            robotTarget.y -= moveBoxTarget.z;
+            robotTarget.z -= moveBoxTarget.z;
 
             StartCoroutine(CoMoveZCylinder(Z_Origin, robotTarget, cylinderTime));
         }
@@ -152,7 +152,7 @@ namespace box_Location
         public void CylinderForwardBtnClkEvnt()
         {
             robotTarget = Load_Origin;
-            robotTarget.x = -0.195f;
+            robotTarget.x = -0.0253f;
             if (box2Count % 24 % 10 == 4)
                 isRotate = false;
             else if (box2Count % 24 % 10 == 0)
@@ -163,7 +163,7 @@ namespace box_Location
         public void CylinderBackwardBtnClkEvnt()
         {
             robotTarget = Load_Origin;
-            robotTarget.x = -0.195f;
+            robotTarget.x = -0.0253f;
             StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, loadCylinderTime));
             robotTarget = Vector3.zero;
 
