@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Box1
   - Box2
+  - Pallet1
+  - Pallet2
   layers:
   - Default
   - TransparentFX
@@ -18,8 +20,8 @@ TagManager:
   - Slider
   - Object
   - Dragger
-  - 
-  - 
+  - Pallet1
+  - Pllet2
   - 
   - 
   - 
