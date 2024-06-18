@@ -1,32 +1,4 @@
-[09:52:29] targetPos (X: 0.0000000, Y: 0.0000000, Z: -0.4200000)
-[09:52:29] LoadingSys_LM_Transfer - 후진 상태입니다
-[09:52:29] Conveyor_PushCylinder - 후진 상태입니다
-[09:52:29] Conveyor_GateCylinder - 전진 상태입니다
-[09:52:32] LoadSystem_Load실린더 - 적재 대기 상태입니다...
-[09:52:37] Conveyor_PushCylinder - 작동중입니다...
-[09:52:37] Conveyor_PushCylinder - 박스를 올바른 위치로 정렬합니다
-[09:52:39] [Sensor]Box2이(가) [물품도착확인센서]에 인식됩니다.
-[09:52:40] Conveyor_GateCylinder - 물체 통과를 감지했습니다
-[09:52:40] Conveyor_GateCylinder - 다음 물체 정렬을 위해 게이트를 닫습니다
-[09:52:40] Conveyor_GateCylinder - 후진 상태입니다
-[09:52:40] [Sensor]Box2이(가) [물품정렬확인센서]에 인식됩니다.
-[09:52:40] Conveyor_PushCylinder - 전진 상태입니다
-[09:52:40] Conveyor_GateCylinder - 작동중입니다...
-[09:52:40] Conveyor_GateCylinder - 통과를 위해 게이트를 엽니다
-[09:52:42] Conveyor_GateCylinder - 전진 상태입니다
-[09:52:43] Conveyor_GateCylinder - 후진 상태입니다
-[09:52:45] Conveyor_PushCylinder - 박스 정렬이 확인되었습니다...
-[09:52:45] Conveyor_PushCylinder - 다음 박스 정렬을 위해 원위치로 돌아갑니다.
-[09:52:46] Conveyor_PushCylinder - 후진 상태입니다
-[09:52:46] [Sensor]Box2이(가) [이동확인센서]에 인식됩니다.
-[09:52:51] 1s
-[09:52:51] 1
-[09:52:51] box2 다음 위치 경로 계획 완료 : targetPos (X: 0.0000000, Y: 0.0000000, Z: 0.0000000)
-[09:53:00] 벡터 재설정: (-0.21, 0.45, 0.78)
-[09:53:00] 0&True
-[09:53:00] 좌표재설정: (0.78, -0.21, 0.45)
-[09:53:00] box2 다음 위치 경로 계획 완료: (0.00, 0.00, 0.00)
-[09:53:07] LoadSystem_XTransfer - 적재지점으로 이동합니다...
-[09:53:07] LoadingSys_LM_Transfer - 전진 상태입니다
-[09:53:07] LoadSystem_LMTransfer - 적재지점으로 이동합니다...
-[09:53:09] LoadSystem_ZTransfer - 적재지점으로 이동합니다...
+[15:40:46] targetPos (X: 0.0000000, Y: 0.0000000, Z: -0.4200000)
+[15:40:46] LoadingSys_LM_Transfer - 후진 상태입니다
+[15:40:46] Conveyor_PushCylinder - 후진 상태입니다
+[15:40:46] Conveyor_GateCylinder - 전진 상태입니다
