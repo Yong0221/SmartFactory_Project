@@ -8,6 +8,7 @@ TagManager:
   - Box2
   - Pallet1
   - Pallet2
+  - facilities
   layers:
   - Default
   - TransparentFX

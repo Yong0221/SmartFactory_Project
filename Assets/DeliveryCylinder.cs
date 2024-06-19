@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class DeliveryCylinder : MonoBehaviour
@@ -19,6 +20,25 @@ public class DeliveryCylinder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+   
+    public void cylinderABckBtnClkEvnt()
+    {
+        GameObject PalletA = GameObject.FindGameObjectWithTag("Pallet1");
+        Rigidbody rb = PalletA.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        PalletA.tag = "Untagged";
+
+
+    }
+    public void cylinderBBckBtnClkEvnt()
+    {
+        GameObject PalletB = GameObject.FindGameObjectWithTag("Pallet2");
+        Rigidbody rb = PalletB.GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        PalletB.tag = "Untagged";
+
 
     }
 

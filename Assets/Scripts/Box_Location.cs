@@ -14,7 +14,8 @@ namespace box_Location
 
         bool isbox2;
         bool isRotate;
-
+        public bool isBackwardSensor;
+        public bool isBeltMoving;
         public Box_Location instance;
 
         float[] box1Size;
@@ -33,6 +34,7 @@ namespace box_Location
         public Transform box2Origin_W;
         public Transform box2Origin_L;
         public Transform belt_Target;
+        public Transform belt_Origin;
         public Sensor arriveSensor;
         public GameObject box1EndSensor;
         public Transform XRotate;
@@ -198,10 +200,9 @@ namespace box_Location
 
         public void beltOnBtnClkEvnt()
         {
-            Vector3 belt_origin = Belt.transform.localPosition;
-            Vector3 belt_target = belt_origin;
-            belt_target.x = belt_Target.localPosition.x;
-            StartCoroutine(CoMoveBelt(belt_origin, belt_target, ConveyorSpeed));
+            
+            
+            StartCoroutine(CoMoveBelt(belt_Origin.localPosition, belt_Target.localPosition, ConveyorSpeed));
         }
 
         public Vector3 box1TargetTrans(Vector3 _box1Target)
@@ -441,10 +442,11 @@ namespace box_Location
 
         IEnumerator CoMoveBelt(Vector3 _originPos, Vector3 _targetPos, float movingTime)
         {
+
             int justonce = 1;
             float elapsedTime = 0f;
             while (elapsedTime < movingTime)
-            {
+            {isBeltMoving = true;
                 float t = elapsedTime / movingTime;
                 Belt.transform.localPosition = Vector3.Lerp(_originPos, _targetPos, t);
                 elapsedTime += Time.deltaTime;
@@ -452,8 +454,17 @@ namespace box_Location
                 if (arriveSensor.isObjectDetected && justonce == 1)
                 {
                     justonce = 0;
-                    yield return new WaitForSeconds(5.3f);
+                    while (!isBackwardSensor)
+                    {
+                        yield return new WaitForSeconds(Time.deltaTime);
+                        print("컨베이어 대기중//BackWardSensor"+isBackwardSensor);
+                    }
+                   
+                    yield return new WaitForSeconds(1f);
                 }
+                Belt.transform.localPosition = _targetPos;
+                isBeltMoving = false;
+               
             }
             Belt.transform.localPosition = _originPos;
 
