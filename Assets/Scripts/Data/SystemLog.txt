@@ -1,0 +1,191 @@
+[17:41:06] targetPos (X: 0.0000000, Y: 0.0000000, Z: -0.4200000)
+[17:41:06] LoadingSys_LM_Transfer - 후진 상태입니다
+[17:41:06] Conveyor_PushCylinder - 후진 상태입니다
+[17:41:06] Conveyor_GateCylinder - 전진 상태입니다
+[17:41:17] LoadSystem_Load실린더 - 적재 대기 상태입니다...
+[17:41:18] [Sensor]Box1이(가) [물품도착확인센서]에 인식됩니다.
+[17:41:18] 컨베이어 대기중//BackWardSensorFalse
+[17:41:18] 컨베이어 대기중//BackWardSensorFalse
+[17:41:18] 컨베이어 대기중//BackWardSensorFalse
+[17:41:18] 컨베이어 대기중//BackWardSensorFalse
+[17:41:18] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:19] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] Conveyor_PushCylinder - 작동중입니다...
+[17:41:20] Conveyor_PushCylinder - 박스를 올바른 위치로 정렬합니다
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:20] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:21] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] Conveyor_PushCylinder - 전진 상태입니다
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:22] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] [Sensor]Box1이(가) [물품정렬확인센서]에 인식됩니다.
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] Conveyor_GateCylinder - 작동중입니다...
+[17:41:23] Conveyor_GateCylinder - 통과를 위해 게이트를 엽니다
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:23] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:24] Conveyor_PushCylinder - 박스 정렬이 확인되었습니다...
+[17:41:24] Conveyor_PushCylinder - 다음 박스 정렬을 위해 원위치로 돌아갑니다.
+[17:41:24] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:25] 컨베이어 대기중//BackWardSensorFalse
+[17:41:26] 컨베이어 대기중//BackWardSensorFalse
+[17:41:26] Conveyor_GateCylinder - 후진 상태입니다
+[17:41:26] 컨베이어 대기중//BackWardSensorFalse
+[17:41:26] Conveyor_PushCylinder - 후진 상태입니다
+[17:41:28] [Sensor]Box1이(가) [이동확인센서]에 인식됩니다.
+[17:41:32] box1충돌
+[17:41:34] 2s
+[17:41:37] LoadSystem_XTransfer - 적재지점으로 이동합니다...
+[17:41:39] LoadingSys_LM_Transfer - 전진 상태입니다
+[17:41:41] LoadSystem_LMTransfer - 적재지점으로 이동합니다...
+[17:41:43] LoadSystem_ZTransfer - 적재지점으로 이동합니다...
+[17:41:44] LoadSystem_Load실린더 - 적재 완료 상태입니다...
+[17:41:46] LoadSystem_ZTransfer - 대기지점으로 이동합니다...
+[17:41:47] LoadingSys_LM_Transfer - 후진 상태입니다
+[17:41:47] LoadSystem_LMTransfer - 대기지점으로 이동합니다...
+[17:41:48] LoadSystem_XTransfer - 대기지점으로 이동합니다...

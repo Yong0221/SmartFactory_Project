@@ -9,9 +9,19 @@ public class PalletGenerator : MonoBehaviour
    
     // Start is called before the first frame update
 
-    public void palletGenerateBtnClkEvnt()
+    public void pallet1GenerateBtnClkEvnt()
     {
         GameObject newObject = Instantiate(pallet,transform.position,transform.rotation);
+        newObject.GetComponent<MeshRenderer>().enabled=true;
+        newObject.tag = "Pallet1";
+        
+
+    }
+    public void pallet2GenerateBtnClkEvnt()
+    {
+        GameObject newObject = Instantiate(pallet, transform.position, transform.rotation);
+        newObject.GetComponent<MeshRenderer>().enabled = true;
+        newObject.tag = "Pallet2";
 
     }
     void Start()
