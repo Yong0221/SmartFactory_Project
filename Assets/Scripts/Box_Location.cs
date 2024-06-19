@@ -38,6 +38,10 @@ namespace box_Location
         public Sensor arriveSensor;
         public GameObject box1EndSensor;
         public Transform XRotate;
+
+        public ConveyorCylinder gateCyl;
+        public ConveyorCylinder pushCyl;
+        public ConveyorData conveyor;
         Quaternion rotOrigin;
         Quaternion rot90Degrees;
         Quaternion rot0Degrees;
@@ -454,7 +458,7 @@ namespace box_Location
                 if (arriveSensor.isObjectDetected && justonce == 1)
                 {
                     justonce = 0;
-                    while (!isBackwardSensor)
+                    while (!gateCyl.backwardSensor.isObjectDetected)
                     {
                         yield return new WaitForSeconds(Time.deltaTime);
                         print("컨베이어 대기중//BackWardSensor"+isBackwardSensor);
