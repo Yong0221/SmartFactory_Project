@@ -76,6 +76,7 @@ namespace mxComponent
         int ditecdclose = 0;
         int ditecdobject = 0; //06.21/10:10
         int start = 0;//06.21/10:22
+        int stopbtn = 0;
         private void Awake()//인스턴스 지정
         {
             if (instance == null)
@@ -411,20 +412,33 @@ namespace mxComponent
          }
         public void OnEmergencyStopBtnClkEvent()
         {
-            if (connection == Connection.Connected)
+            if (connection == Connection.Connected)   //06.19/15:25
             {
-                startBtn.image.color = Color.white;
-                stopBtn.image.color = Color.red;
-                emergencyBtn.image.color = Color.red;
+                switch (stopbtn)
+                {
+                    case 0:
+                        startBtn.image.color = Color.white;
+                        stopBtn.image.color = Color.white;
+                        emergencyBtn.image.color = Color.red;
 
-                SetDevice("X99", 1);
-                print("[PLC][Alert] PLC 비상 정지 버튼이 활성화되었습니다.");
-                datasend = 0;
+                        SetDevice("X99", 1);
+                        print("[PLC][Alert] PLC 비상 정지 버튼이 활성화되었습니다.");
+                        datasend = 0;
+                        ditecd = 0;
+                        stopbtn = 1;
+                        break;
+                    case 1:
+                        startBtn.image.color = Color.white;
+                        stopBtn.image.color = Color.white;
+                        emergencyBtn.image.color = Color.white;
 
-            }
-            else
-            {
-                SetDevice("X99", 0);
+                        SetDevice("X99", 0);
+                        print("[PLC][Alert] PLC 비상 정지 버튼이 해제되었습니다.");
+                        datasend = 0;
+                        ditecd = 0;
+                        stopbtn = 0;
+                        break;
+                }
             }
         }
         IEnumerator InitPosition()
