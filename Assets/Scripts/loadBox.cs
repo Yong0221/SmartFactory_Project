@@ -4,6 +4,8 @@ public class loadBox : MonoBehaviour
 {
     private Transform loadFixedPart; // Load 고정부
     public bool[] isBoxLoading;//0번주소 부터 1호박스 2호박스, 추후 박스 추가 가능
+    public GameObject colliedBox1;
+    public GameObject colliedBox2;
 
     void Start()
     {
@@ -26,7 +28,8 @@ public class loadBox : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Box1"))
         {
-            GameObject.FindGameObjectWithTag("Box1").transform.SetParent(loadFixedPart);
+            colliedBox1 = collision.gameObject;
+            collision.transform.SetParent(loadFixedPart);
             print("box1충돌");
 
             for (int i=0; i<isBoxLoading.Length; i++)
@@ -36,25 +39,13 @@ public class loadBox : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Box2"))
         {
-                        GameObject.FindGameObjectWithTag("Box2").transform.SetParent(loadFixedPart);
+            colliedBox2 = collision.gameObject;
+                        collision.transform.SetParent(loadFixedPart);
             for (int i = 0; i < isBoxLoading.Length; i++)
                 isBoxLoading[i] = false;
             isBoxLoading[1] = true;
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Box1"))
-        {
-            GameObject.FindGameObjectWithTag("Box1").transform.SetParent(null);
-            GameObject.FindGameObjectWithTag("Box1").tag = "Untagged";
-  
-        }
-        else if (collision.gameObject.CompareTag("Box2"))
-        {
-            GameObject.FindGameObjectWithTag("Box2").transform.SetParent(null);
-            GameObject.FindGameObjectWithTag("Box2").tag = "Untagged";
-        }
-    }
+
 }

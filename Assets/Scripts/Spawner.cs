@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,12 @@ public class Spawner : MonoBehaviour
     public GameObject box1;
     public GameObject box2;
 
+    public float box1Count;
+    public float box2Count;
     // 버튼 클릭 이벤트에서 호출될 메서드를 선언합니다.
     public void OnBoxGenerateBtnClkEvnt()
     {
+       
         // 랜덤으로 프리팹을 선택합니다.
         GameObject selectedPrefab = Random.Range(0, 2) == 0 ? box1 : box2;
 
@@ -27,10 +31,13 @@ public class Spawner : MonoBehaviour
         if (selectedPrefab == box1)
         {
             newObject.tag = "Box1";
+            box1Count++;
+
         }
         else if (selectedPrefab == box2)
         {
             newObject.tag = "Box2";
+            box2Count++;
         }
     }
 

@@ -10,6 +10,7 @@ namespace box_Location
 {
     public class Box_Location : MonoBehaviour
     {
+        bool isResetTarget;
         int box2Mode;
 
         bool isbox2;
@@ -17,7 +18,7 @@ namespace box_Location
         public bool isBackwardSensor;
         public bool isBeltMoving;
         public Box_Location instance;
-
+        public Pallet_Loading palletLoad;
         float[] box1Size;
         float[] box2Size;
         float box1Count;
@@ -29,6 +30,7 @@ namespace box_Location
         float cylinderTime;
         public float loadCylinderTime;
         public float rotateTime;
+
 
         public Transform box1_Origin;
         public Transform box2Origin_W;
@@ -42,6 +44,8 @@ namespace box_Location
         public ConveyorCylinder gateCyl;
         public ConveyorCylinder pushCyl;
         public ConveyorData conveyor;
+        public Spawner Box_Generator;
+
         Quaternion rotOrigin;
         Quaternion rot90Degrees;
         Quaternion rot0Degrees;
@@ -74,11 +78,14 @@ namespace box_Location
 
         void Start()
         {
-            box1MoveTime = 2f;
-            box2MoveTime = 1f;
+            ConveyorSpeed = 4;
+            box1MoveTime = 1f;
+            box2MoveTime = 0.5f;
             rotateTime = 0.5f;
             loadCylinderTime = 0.5f;
             isTransfer = true;
+            isResetTarget = false;
+            isRotate = true;
 
             box1Size = new float[] { 0.22f, 0.19f, 0.09f };
             box2Size = new float[] { 0.27f, 0.18f, 0.15f };
@@ -103,8 +110,8 @@ namespace box_Location
 
         public void Update()
         {
-            box1CountDisplay.text = box1Count.ToString();
-            box2CountDisplay.text = box2Count.ToString();
+            box1CountDisplay.text = Box_Generator.box1Count.ToString();
+            box2CountDisplay.text = Box_Generator.box2Count.ToString();
         }
 
         public void LMLoadBtnClkEvnt()
@@ -159,15 +166,20 @@ namespace box_Location
         {
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
-            if (box2Count % 24 % 10 == 4)
+            if (Box_Generator.box2Count % 24 % 10 == 4)
                 isRotate = false;
-            else if (box2Count % 24 % 10 == 0)
+            else if (Box_Generator.box2Count % 24 % 10 == 0)
                 isRotate = true;
             StartCoroutine(CoMoveLoadCylinder(Load_Origin, robotTarget, loadCylinderTime));
         }
 
         public void CylinderBackwardBtnClkEvnt()
         {
+            /*if (Box_Generator.box2Count == 1)
+                Box_Generator.box2Count = 24;
+            else if (Box_Generator.box1Count == 1)
+                Box_Generator.box1Count = 25;           //층 변환 테스트 모드
+*/
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
             StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, loadCylinderTime));
@@ -175,25 +187,30 @@ namespace box_Location
 
             if (loadCheck.isBoxLoading[0])
             {
-                GameObject box1 = GameObject.FindGameObjectWithTag("Box1");
-                box1.transform.SetParent(null);
+                GameObject box1 = loadCheck.colliedBox1;
+             
                 Rigidbody rb = box1.GetComponent<Rigidbody>();
-                ;
-                rb.isKinematic = true;
+                rb.constraints = RigidbodyConstraints.None;
+               
+
+
                 StartCoroutine(Timer(rb, loadCylinderTime));
-                box1.tag = "Untagged";
+              
                 loadCheck.isBoxLoading[0] = false;
             }
             else if (loadCheck.isBoxLoading[1])
             {
-                GameObject box2 = GameObject.FindGameObjectWithTag("Box2");
-                box2.transform.SetParent(null);
+                GameObject box2 = loadCheck.colliedBox2;
                 Rigidbody rb = box2.GetComponent<Rigidbody>();
-
-                rb.isKinematic = true;
+                rb.constraints = RigidbodyConstraints.None;
+                
+     
                 StartCoroutine(Timer(rb, loadCylinderTime));
-                box2.tag = "Untagged";
+             
+              
                 loadCheck.isBoxLoading[1] = false;
+               
+                isResetTarget = false;
             }
         }
         private IEnumerator Timer(Rigidbody rb, float delay)
@@ -211,15 +228,18 @@ namespace box_Location
 
         public Vector3 box1TargetTrans(Vector3 _box1Target)
         {
-            box1Count += 1;
+            float box1FloorCount = Box_Generator.box1Count % 25;
+         
             _box1Target.y -= box1Size[1] + 0.005f;
-            if (box1Count % 25 == 0)
+            if ( box1FloorCount==1)
             {
                 _box1Target.y = 0;
                 _box1Target.x = 0;
-                _box1Target.z -= box1Size[2];
+             
+                if (Box_Generator.box1Count!=1)
+                    _box1Target.z -= box1Size[2];// XY 위치 초기화 및 Z충 한칸 이동
             }
-            else if (box1Count % 5 == 0)
+            else if (Box_Generator.box1Count % 5 == 1)
             {
                 _box1Target.y = 0;
                 _box1Target.x -= box1Size[0];
@@ -240,7 +260,7 @@ namespace box_Location
         {
 
             float floorBoxEA;
-            floorBoxEA = box2Count % 24;//한층의 박스 갯수 24개임
+            floorBoxEA = Box_Generator.box2Count % 24;//한층의 박스 갯수 24개임
             _box2Target.y -= box2Size[0] + 0.005f;
             if (floorBoxEA == 1)
             {
@@ -248,7 +268,7 @@ namespace box_Location
                 _box2Target.x = 0;
                 _box2Target.y = 0;
                 _box2Target.z -= box2Size[2];// XY 위치 초기화 및 Z충 한칸 이동
-                if (box2Count == 1)
+                if (Box_Generator.box2Count == 1)
                     _box2Target = Vector3.zero;
             }
             else if (floorBoxEA % 10 == 1 && floorBoxEA != 1)
@@ -291,6 +311,7 @@ namespace box_Location
 
         public void XRotateBtnClkEvnt()
         {
+         
             StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, rotateTime));
         }
 
@@ -325,27 +346,33 @@ namespace box_Location
 
                 if (loadCheck.isBoxLoading[1])
                 {
-                    GameObject gameobject = GameObject.FindGameObjectWithTag("Box2");
+                    GameObject gameobject = loadCheck.colliedBox2;
                     if (gameobject == null)
                     {
                         Debug.LogError("Box2 태그를 가진 게임 오브젝트를 찾을 수 없습니다.");
                         yield break;
                     }
+                    if (!isResetTarget)
+                    {
+                        gameobject.transform.SetParent(null);
 
-                    gameobject.transform.SetParent(null);
+                        nowPos = gameobject.transform.position;
 
-                    nowPos = gameobject.transform.position;
+                        target2Pos = nowPos - box2Origin_W.position;
+                        Debug.Log("벡터 재설정: " + target2Pos.ToString());
+                        target2Pos = transAxis(target2Pos);
+                        box2_deltaPos = box2TargetTrans(box2_deltaPos);
+                        target2Pos += box2_deltaPos;
+                        Debug.Log("좌표재설정: " + target2Pos.ToString());
+                        moveBoxTarget = target2Pos;
 
-                    target2Pos = nowPos - box2Origin_W.position;
-                    Debug.Log("벡터 재설정: " + target2Pos.ToString());
-                    target2Pos = transAxis(target2Pos);
-                    box2_deltaPos = box2TargetTrans(box2_deltaPos);
-                    target2Pos += box2_deltaPos;
-                    Debug.Log("좌표재설정: " + target2Pos.ToString());
-                    moveBoxTarget = target2Pos;
+                        Debug.Log($"box2 다음 위치 경로 계획 완료 : {ToString(box2_deltaPos)}");
+                        Debug.Log($"box2 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
+                        gameobject.transform.SetParent(LoadFixedPart.transform);
+                        isResetTarget = true;
+                    }
 
-                    Debug.Log($"box2 다음 위치 경로 계획 완료: {box2_deltaPos.ToString()}");
-                    gameobject.transform.SetParent(LoadFixedPart.transform);
+                   
                 }
             }
             yield return null;
@@ -478,13 +505,16 @@ namespace box_Location
                 cylinderTime = box1MoveTime;
                 print(cylinderTime + "s");
                 isbox2 = false;
-                nowPos = GameObject.FindGameObjectWithTag("Box1").transform.position;
+                box1_deltaPos = box1TargetTrans(box1_deltaPos);
+                nowPos = loadCheck.colliedBox1.transform.position;
                 target1Pos = nowPos - box1_Origin.position;
                 target1Pos = transAxis(target1Pos);
                 target1Pos += box1_deltaPos;
                 moveBoxTarget = target1Pos;
-                box1_deltaPos = box1TargetTrans(box1_deltaPos);
-                // Debug.Log($"box1 다음 위치 경로 계획 완료 : {ToString(box1_deltaPos)}");
+                
+
+                Debug.Log($"box1 다음 위치 경로 계획 완료 : {ToString(box1_deltaPos)}");
+                 Debug.Log($"box1 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
             }
             else if (loadCheck.isBoxLoading[1])
             {
@@ -493,9 +523,8 @@ namespace box_Location
                 print(cylinderTime+"s");
 
 
-                box2Count++;
-                print(box2Count);
-                GameObject gameobject = GameObject.FindGameObjectWithTag("Box2");
+
+                GameObject gameobject = loadCheck.colliedBox2;
 
 
                 nowPos = gameobject.transform.position;
@@ -506,8 +535,12 @@ namespace box_Location
                     target2Pos = transAxis(target2Pos);
                     target2Pos += box2_deltaPos;
                     moveBoxTarget = target2Pos;
+                    Debug.Log($"box2 다음 위치 경로 계획 완료 : {ToString(box2_deltaPos)}");
+                    Debug.Log($"box2 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
+
                 }
-                Debug.Log($"box2 다음 위치 경로 계획 완료 : {ToString(box2_deltaPos)}");
+           
+             
             }
         }
     }
