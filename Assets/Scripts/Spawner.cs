@@ -11,9 +11,10 @@ public class Spawner : MonoBehaviour
     // 두 개의 프리팹을 변수로 선언합니다.
     public GameObject box1;
     public GameObject box2;
+    public float box1Count_in;
+    public float box2Count_in;
 
-    public float box1Count;
-    public float box2Count;
+
     // 버튼 클릭 이벤트에서 호출될 메서드를 선언합니다.
     public void OnBoxGenerateBtnClkEvnt()
     {
@@ -31,13 +32,15 @@ public class Spawner : MonoBehaviour
         if (selectedPrefab == box1)
         {
             newObject.tag = "Box1";
-            box1Count++;
+            box1Count_in++;
+ 
 
         }
         else if (selectedPrefab == box2)
         {
             newObject.tag = "Box2";
-            box2Count++;
+            box2Count_in++;
+
         }
     }
 

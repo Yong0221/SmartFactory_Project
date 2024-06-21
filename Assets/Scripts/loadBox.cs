@@ -6,6 +6,8 @@ public class loadBox : MonoBehaviour
     public bool[] isBoxLoading;//0번주소 부터 1호박스 2호박스, 추후 박스 추가 가능
     public GameObject colliedBox1;
     public GameObject colliedBox2;
+    public float box1Count;
+    public float box2Count;
 
     void Start()
     {
@@ -28,6 +30,7 @@ public class loadBox : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Box1"))
         {
+            box1Count++;
             colliedBox1 = collision.gameObject;
             collision.transform.SetParent(loadFixedPart);
             print("box1충돌");
@@ -39,6 +42,7 @@ public class loadBox : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Box2"))
         {
+            box2Count++;
             colliedBox2 = collision.gameObject;
                         collision.transform.SetParent(loadFixedPart);
             for (int i = 0; i < isBoxLoading.Length; i++)

@@ -12,7 +12,7 @@ namespace box_Location
     {
         bool isResetTarget;
         int box2Mode;
-
+        public bool isCylinderBackward;
         bool isbox2;
         bool isRotate;
         public bool isBackwardSensor;
@@ -61,7 +61,7 @@ namespace box_Location
         Vector3 moveBoxTarget;
         Vector3 box1_deltaPos;
         Vector3 box2_deltaPos;
-        public loadBox loadCheck;
+        public loadBox loadBox;
 
         public Transform LMTransfer;
         public Transform X_Transfer;
@@ -110,8 +110,8 @@ namespace box_Location
 
         public void Update()
         {
-            box1CountDisplay.text = Box_Generator.box1Count.ToString();
-            box2CountDisplay.text = Box_Generator.box2Count.ToString();
+            box1CountDisplay.text = Box_Generator.box1Count_in.ToString();
+            box2CountDisplay.text = Box_Generator.box2Count_in.ToString();
         }
 
         public void LMLoadBtnClkEvnt()
@@ -164,30 +164,33 @@ namespace box_Location
 
         public void CylinderForwardBtnClkEvnt()
         {
+            isCylinderBackward = false;
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
-            if (Box_Generator.box2Count % 24 % 10 == 4)
+            if (loadBox.box2Count % 24 % 10 == 4)
                 isRotate = false;
-            else if (Box_Generator.box2Count % 24 % 10 == 0)
+            else if (loadBox.box2Count % 24 % 10 == 0)
                 isRotate = true;
             StartCoroutine(CoMoveLoadCylinder(Load_Origin, robotTarget, loadCylinderTime));
         }
 
         public void CylinderBackwardBtnClkEvnt()
         {
-            /*if (Box_Generator.box2Count == 1)
-                Box_Generator.box2Count = 24;
-            else if (Box_Generator.box1Count == 1)
-                Box_Generator.box1Count = 25;           //층 변환 테스트 모드
+           
+            /*if (loadBox.box2Count == 1)
+                loadBox.box2Count = 24;
+            else if (loadBox.box1Count == 1)
+                loadBox.box1Count = 25;           //층 변환 테스트 모드
 */
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
             StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, loadCylinderTime));
+          
             robotTarget = Vector3.zero;
 
-            if (loadCheck.isBoxLoading[0])
+            if (loadBox.isBoxLoading[0])
             {
-                GameObject box1 = loadCheck.colliedBox1;
+                GameObject box1 = loadBox.colliedBox1;
              
                 Rigidbody rb = box1.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.None;
@@ -195,28 +198,35 @@ namespace box_Location
 
 
                 StartCoroutine(Timer(rb, loadCylinderTime));
+                
               
-                loadCheck.isBoxLoading[0] = false;
+                loadBox.isBoxLoading[0] = false;
             }
-            else if (loadCheck.isBoxLoading[1])
+            else if (loadBox.isBoxLoading[1])
             {
-                GameObject box2 = loadCheck.colliedBox2;
+                GameObject box2 = loadBox.colliedBox2;
                 Rigidbody rb = box2.GetComponent<Rigidbody>();
-                rb.constraints = RigidbodyConstraints.None;
+              
+                    rb.constraints = RigidbodyConstraints.None;
                 
      
                 StartCoroutine(Timer(rb, loadCylinderTime));
              
               
-                loadCheck.isBoxLoading[1] = false;
+                loadBox.isBoxLoading[1] = false;
                
                 isResetTarget = false;
             }
+            isCylinderBackward = true;
         }
         private IEnumerator Timer(Rigidbody rb, float delay)
         {
-            yield return new WaitForSeconds(delay);
             rb.isKinematic = false;
+            yield return new WaitForSeconds(delay);
+            rb.isKinematic = true;
+      
+              
+        
         }
 
         public void beltOnBtnClkEvnt()
@@ -228,7 +238,7 @@ namespace box_Location
 
         public Vector3 box1TargetTrans(Vector3 _box1Target)
         {
-            float box1FloorCount = Box_Generator.box1Count % 25;
+            float box1FloorCount = loadBox.box1Count % 25;
          
             _box1Target.y -= box1Size[1] + 0.005f;
             if ( box1FloorCount==1)
@@ -236,10 +246,10 @@ namespace box_Location
                 _box1Target.y = 0;
                 _box1Target.x = 0;
              
-                if (Box_Generator.box1Count!=1)
+                if (loadBox.box1Count!=1)
                     _box1Target.z -= box1Size[2];// XY 위치 초기화 및 Z충 한칸 이동
             }
-            else if (Box_Generator.box1Count % 5 == 1)
+            else if (loadBox.box1Count % 5 == 1)
             {
                 _box1Target.y = 0;
                 _box1Target.x -= box1Size[0];
@@ -260,7 +270,7 @@ namespace box_Location
         {
 
             float floorBoxEA;
-            floorBoxEA = Box_Generator.box2Count % 24;//한층의 박스 갯수 24개임
+            floorBoxEA = loadBox.box2Count % 24;//한층의 박스 갯수 24개임
             _box2Target.y -= box2Size[0] + 0.005f;
             if (floorBoxEA == 1)
             {
@@ -268,7 +278,7 @@ namespace box_Location
                 _box2Target.x = 0;
                 _box2Target.y = 0;
                 _box2Target.z -= box2Size[2];// XY 위치 초기화 및 Z충 한칸 이동
-                if (Box_Generator.box2Count == 1)
+                if (loadBox.box2Count == 1)
                     _box2Target = Vector3.zero;
             }
             else if (floorBoxEA % 10 == 1 && floorBoxEA != 1)
@@ -344,9 +354,9 @@ namespace box_Location
                 }
                 XRotate.rotation = _rot;
 
-                if (loadCheck.isBoxLoading[1])
+                if (loadBox.isBoxLoading[1])
                 {
-                    GameObject gameobject = loadCheck.colliedBox2;
+                    GameObject gameobject = loadBox.colliedBox2;
                     if (gameobject == null)
                     {
                         Debug.LogError("Box2 태그를 가진 게임 오브젝트를 찾을 수 없습니다.");
@@ -499,14 +509,14 @@ namespace box_Location
             }
             Belt.transform.localPosition = _originPos;
 
-            if (loadCheck.isBoxLoading[0])
+            if (loadBox.isBoxLoading[0])
             {
-                
+               
                 cylinderTime = box1MoveTime;
                 print(cylinderTime + "s");
                 isbox2 = false;
                 box1_deltaPos = box1TargetTrans(box1_deltaPos);
-                nowPos = loadCheck.colliedBox1.transform.position;
+                nowPos = loadBox.colliedBox1.transform.position;
                 target1Pos = nowPos - box1_Origin.position;
                 target1Pos = transAxis(target1Pos);
                 target1Pos += box1_deltaPos;
@@ -516,15 +526,16 @@ namespace box_Location
                 Debug.Log($"box1 다음 위치 경로 계획 완료 : {ToString(box1_deltaPos)}");
                  Debug.Log($"box1 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
             }
-            else if (loadCheck.isBoxLoading[1])
+            else if (loadBox.isBoxLoading[1])
             {
+
                 isbox2 = true;
                 cylinderTime=box2MoveTime;
                 print(cylinderTime+"s");
 
 
 
-                GameObject gameobject = loadCheck.colliedBox2;
+                GameObject gameobject = loadBox.colliedBox2;
 
 
                 nowPos = gameobject.transform.position;
