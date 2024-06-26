@@ -10,15 +10,20 @@ namespace box_Location
 {
     public class Box_Location : MonoBehaviour
     {
-        bool isResetTarget;
-        int box2Mode;
+        public bool isResetTarget1;
+        public bool isResetTarget2;
+        public bool isResetTarget3;
 
-        bool isbox2;
-        bool isRotate;
+
+        int box2Mode;
+        public bool isCylinderBackward;
+        public bool isbox2;
+        public bool isRotate;
         public bool isBackwardSensor;
         public bool isBeltMoving;
         public Box_Location instance;
-        public Pallet_Loading palletLoad;
+        public GameObject palletLoad1;
+        public GameObject palletLoad2;
         float[] box1Size;
         float[] box2Size;
         float box1Count;
@@ -61,7 +66,7 @@ namespace box_Location
         Vector3 moveBoxTarget;
         Vector3 box1_deltaPos;
         Vector3 box2_deltaPos;
-        public loadBox loadCheck;
+        public loadBox loadBox;
 
         public Transform LMTransfer;
         public Transform X_Transfer;
@@ -73,22 +78,26 @@ namespace box_Location
 
         public TMP_Text box1CountDisplay;
         public TMP_Text box2CountDisplay;
-        public bool isConveyorMove;
+        // public bool isConveyorMove;
         bool isTransfer;
 
         void Start()
         {
+            palletLoad1 = GameObject.FindGameObjectWithTag("Pallet1");
+            palletLoad2 = GameObject.FindGameObjectWithTag("Pallet2");
             ConveyorSpeed = 4;
             box1MoveTime = 1f;
             box2MoveTime = 0.5f;
             rotateTime = 0.5f;
             loadCylinderTime = 0.5f;
             isTransfer = true;
-            isResetTarget = false;
+            isResetTarget1 = false;
+            isResetTarget2 = false;
+            isResetTarget3 = false;
             isRotate = true;
 
             box1Size = new float[] { 0.22f, 0.19f, 0.09f };
-            box2Size = new float[] { 0.27f, 0.18f, 0.15f };
+            box2Size = new float[] { 0.275f, 0.183f, 0.15f };
 
             rotOrigin = XRotate.rotation;
             rot90Degrees = rotOrigin * Quaternion.Euler(0, -90f, 0);
@@ -110,8 +119,8 @@ namespace box_Location
 
         public void Update()
         {
-            box1CountDisplay.text = Box_Generator.box1Count.ToString();
-            box2CountDisplay.text = Box_Generator.box2Count.ToString();
+            box1CountDisplay.text = Box_Generator.box1Count_in.ToString();
+            box2CountDisplay.text = Box_Generator.box2Count_in.ToString();
         }
 
         public void LMLoadBtnClkEvnt()
@@ -121,14 +130,16 @@ namespace box_Location
             temp.z -= moveBoxTarget.x;
             robotTarget = temp;
             //Debug.Log($"LMLoadBtnClkEvnt - Origin: {ToString(LM_Origin)}, Target: {ToString(robotTarget)}");
-            StartCoroutine(CoMoveLMCylinder(LM_Origin, robotTarget, cylinderTime));
+            if (isResetTarget1 || isResetTarget2 || isResetTarget3)
+                StartCoroutine(CoMoveLMCylinder(LM_Origin, robotTarget, cylinderTime));
         }
 
         public void LMOriginBtnClkEvnt()
         {
             //Debug.Log($"LMOriginBtnClkEvnt - Origin: {ToString(LM_Origin)}, Current Position: {ToString(LMTransfer.localPosition)}");
             robotTarget = LM_Origin;
-            StartCoroutine(CoMoveLMCylinder(LMTransfer.localPosition, LM_Origin, cylinderTime));
+            if (isResetTarget1 || isResetTarget2 || isResetTarget3)
+                StartCoroutine(CoMoveLMCylinder(LMTransfer.localPosition, LM_Origin, cylinderTime));
         }
 
         public void XLoadBtnClkEvnt()
@@ -136,14 +147,16 @@ namespace box_Location
             robotTarget = X_Origin;
             robotTarget.x -= moveBoxTarget.y;
             // Debug.Log($"XLoadBtnClkEvnt - Origin: {ToString(X_Origin)}, Target: {ToString(robotTarget)}");
-            StartCoroutine(CoMoveXCylinder(X_Origin, robotTarget, cylinderTime));
+            if (isResetTarget1 || isResetTarget2 || isResetTarget3)
+                StartCoroutine(CoMoveXCylinder(X_Origin, robotTarget, cylinderTime));
         }
 
         public void XOriginBtnClkEvnt()
         {
             // Debug.Log($"XOriginBtnClkEvnt - Origin: {ToString(X_Origin)}, Current Position: {ToString(X_Transfer.localPosition)}");
             robotTarget = X_Origin;
-            StartCoroutine(CoMoveXCylinder(X_Transfer.localPosition, X_Origin, cylinderTime));
+            if (isResetTarget1 || isResetTarget2 || isResetTarget3)
+                StartCoroutine(CoMoveXCylinder(X_Transfer.localPosition, X_Origin, cylinderTime));
         }
 
         public void ZLoadBtnClkEvnt()
@@ -151,72 +164,92 @@ namespace box_Location
             // Debug.Log($"ZLoadBtnClkEvnt - Origin: {ToString(Z_Origin)}, Target: {ToString(robotTarget)}");
             robotTarget = Z_Origin;
             robotTarget.z -= moveBoxTarget.z;
-
-            StartCoroutine(CoMoveZCylinder(Z_Origin, robotTarget, cylinderTime));
+            if (isResetTarget1 || isResetTarget2 || isResetTarget3)
+                StartCoroutine(CoMoveZCylinder(Z_Origin, robotTarget, cylinderTime));
         }
 
         public void ZOriginBtnClkEvnt()
         {
             // Debug.Log($"ZOriginBtnClkEvnt - Origin: {ToString(Z_Origin)}, Current Position: {ToString(Z_Transfer.localPosition)}");
             robotTarget = Z_Origin;
-            StartCoroutine(CoMoveZCylinder(Z_Transfer.localPosition, Z_Origin, cylinderTime));
+            if (isResetTarget1 || isResetTarget2 || isResetTarget3)
+                StartCoroutine(CoMoveZCylinder(Z_Transfer.localPosition, Z_Origin, cylinderTime));
         }
 
         public void CylinderForwardBtnClkEvnt()
         {
+            loadBox.once = true;
+            isResetTarget1 = false;
+            isResetTarget2 = false;
+            isResetTarget3 = false;
+            isCylinderBackward = false;
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
-            if (Box_Generator.box2Count % 24 % 10 == 4)
+            if (loadBox.box2Count % 24 % 10 == 4)
                 isRotate = false;
-            else if (Box_Generator.box2Count % 24 % 10 == 0)
+            else if (loadBox.box2Count % 24 % 10 == 0)
                 isRotate = true;
             StartCoroutine(CoMoveLoadCylinder(Load_Origin, robotTarget, loadCylinderTime));
         }
 
         public void CylinderBackwardBtnClkEvnt()
         {
-            /*if (Box_Generator.box2Count == 1)
-                Box_Generator.box2Count = 24;
-            else if (Box_Generator.box1Count == 1)
-                Box_Generator.box1Count = 25;           //층 변환 테스트 모드
+
+            /*if (loadBox.box2Count == 1)
+                loadBox.box2Count = 24;
+            else if (loadBox.box1Count == 1)
+                loadBox.box1Count = 25;           //층 변환 테스트모드
+
 */
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
             StartCoroutine(CoMoveLoadCylinder(robotTarget, Load_Origin, loadCylinderTime));
+          
             robotTarget = Vector3.zero;
 
-            if (loadCheck.isBoxLoading[0])
+            if (loadBox.isBoxLoading[0])
             {
-                GameObject box1 = loadCheck.colliedBox1;
+                GameObject box1 = loadBox.colliedBox1;
              
                 Rigidbody rb = box1.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.None;
+                if (!palletLoad1.GetComponent<Pallet_Loading>().isloading)
+                {
+                    StartCoroutine(Timer(rb, loadCylinderTime+1f));
+                    box1.transform.SetParent(palletLoad1.transform);
+                }
                
-
-
-                StartCoroutine(Timer(rb, loadCylinderTime));
               
-                loadCheck.isBoxLoading[0] = false;
+                loadBox.isBoxLoading[0] = false;
             }
-            else if (loadCheck.isBoxLoading[1])
+            else if (loadBox.isBoxLoading[1])
             {
-                GameObject box2 = loadCheck.colliedBox2;
+                GameObject box2 = loadBox.colliedBox2;
                 Rigidbody rb = box2.GetComponent<Rigidbody>();
                 rb.constraints = RigidbodyConstraints.None;
-                
-     
-                StartCoroutine(Timer(rb, loadCylinderTime));
-             
-              
-                loadCheck.isBoxLoading[1] = false;
+                     if (!palletLoad2.GetComponent<Pallet_Loading>().isloading)
+                {
+                    StartCoroutine(Timer(rb, loadCylinderTime+1f));
+                    box2.transform.SetParent(palletLoad2.transform);
+                }
+
+
+
+
+                loadBox.isBoxLoading[1] = false;
                
-                isResetTarget = false;
+             
             }
+            isCylinderBackward = true;
         }
         private IEnumerator Timer(Rigidbody rb, float delay)
         {
-            yield return new WaitForSeconds(delay);
             rb.isKinematic = false;
+            yield return new WaitForSeconds(delay);
+            rb.isKinematic = true;
+
+
+
         }
 
         public void beltOnBtnClkEvnt()
@@ -228,7 +261,7 @@ namespace box_Location
 
         public Vector3 box1TargetTrans(Vector3 _box1Target)
         {
-            float box1FloorCount = Box_Generator.box1Count % 25;
+            float box1FloorCount = loadBox.box1Count % 25;
          
             _box1Target.y -= box1Size[1] + 0.005f;
             if ( box1FloorCount==1)
@@ -236,10 +269,10 @@ namespace box_Location
                 _box1Target.y = 0;
                 _box1Target.x = 0;
              
-                if (Box_Generator.box1Count!=1)
+                if (loadBox.box1Count!=1)
                     _box1Target.z -= box1Size[2];// XY 위치 초기화 및 Z충 한칸 이동
             }
-            else if (Box_Generator.box1Count % 5 == 1)
+            else if (loadBox.box1Count % 5 == 1)
             {
                 _box1Target.y = 0;
                 _box1Target.x -= box1Size[0];
@@ -260,32 +293,37 @@ namespace box_Location
         {
 
             float floorBoxEA;
-            floorBoxEA = Box_Generator.box2Count % 24;//한층의 박스 갯수 24개임
-            _box2Target.y -= box2Size[0] + 0.005f;
+            floorBoxEA = loadBox.box2Count % 24;//한층의 박스 갯수 24개임
+            print("현재 층 박스 개수 : "+floorBoxEA );
+            print("박스 총 개수 : "+loadBox.box2Count);
+
+            _box2Target.y -= box2Size[0];
             if (floorBoxEA == 1)
             {
 
                 _box2Target.x = 0;
                 _box2Target.y = 0;
-                _box2Target.z -= box2Size[2];// XY 위치 초기화 및 Z충 한칸 이동
-                if (Box_Generator.box2Count == 1)
+                _box2Target.z -= box2Size[2]+0.005f;// XY 위치 초기화 및 Z충 한칸 이동
+                if (loadBox.box2Count == 1)
                     _box2Target = Vector3.zero;
+                print("층 변환 : " + floorBoxEA);
             }
             else if (floorBoxEA % 10 == 1 && floorBoxEA != 1)
             {
                 box2Mode = 0;
                 switchMode(box2Mode);
                 _box2Target.y = 0;
-                _box2Target.x -= box2Size[0] + 0.005f;
-                print("11or 21개일때");
+                _box2Target.x -= box2Size[0] ;
+                print("Width방향 변환 : " + floorBoxEA);
             }
             else if (floorBoxEA % 10 == 5)
             {
-                print("5,15개일때");
+                print("Length방향 변환: " + floorBoxEA);
+               
                 box2Mode = 1;
                 switchMode(box2Mode);
                 _box2Target.y = 0;
-                _box2Target.x -= box2Size[0] + 0.005f;
+                _box2Target.x -= box2Size[0] + 0.002f;
             }
             print(box2Mode + "&" + isRotate);
             return _box2Target;
@@ -297,30 +335,32 @@ namespace box_Location
             {
                 case 0:
                     isRotate = true;
-                    box2Size[0] = 0.27f;
-                    box2Size[1] = 0.18f;
+                    box2Size[0] = 0.275f;
+                    box2Size[1] = 0.183f;
 
                     break;
                 case 1:
                     isRotate = false;
-                    box2Size[0] = 0.18f;
-                    box2Size[1] = 0.27f;
+                    box2Size[0] = 0.183f;
+                    box2Size[1] = 0.275f;
                     break;
             }
         }
 
         public void XRotateBtnClkEvnt()
         {
-         
-            StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, rotateTime));
+        
+
+                StartCoroutine(CoRotateCylinder(rot0Degrees, rot90Degrees, rotateTime));
         }
+
 
         public void XRotateOriginBtnClkEvnt()
         {
+            
 
-          
 
-            StartCoroutine(CoRotateCylinder(rot90Degrees, rot0Degrees, rotateTime));
+                StartCoroutine(CoRotateCylinder(rot90Degrees, rot0Degrees, rotateTime));
 
         }
 
@@ -330,12 +370,12 @@ namespace box_Location
             {
                 if (_rotateTime <= 0)
                 {
-                    Debug.LogError("_rotateTime이 0보다 커야 합니다.");
+                    Debug.LogError("_rotateTime이 0보다 커야합니다.");
                     yield break;
                 }
 
                 float elapsedTime = 0f;
-                while (elapsedTime < _rotateTime)
+                while (elapsedTime < _rotateTime )
                 {
                     elapsedTime += Time.deltaTime;
                     float t = Mathf.Clamp01(elapsedTime / _rotateTime);
@@ -344,37 +384,41 @@ namespace box_Location
                 }
                 XRotate.rotation = _rot;
 
-                if (loadCheck.isBoxLoading[1])
+                if (loadBox.isBoxLoading[1])
                 {
-                    GameObject gameobject = loadCheck.colliedBox2;
+                    GameObject gameobject = loadBox.colliedBox2;
                     if (gameobject == null)
                     {
                         Debug.LogError("Box2 태그를 가진 게임 오브젝트를 찾을 수 없습니다.");
                         yield break;
                     }
-                    if (!isResetTarget)
+                    if (!isResetTarget3)
                     {
                         gameobject.transform.SetParent(null);
 
                         nowPos = gameobject.transform.position;
 
                         target2Pos = nowPos - box2Origin_W.position;
-                        Debug.Log("벡터 재설정: " + target2Pos.ToString());
+                        Debug.Log("벡터 재설정 : " + target2Pos.ToString());
                         target2Pos = transAxis(target2Pos);
                         box2_deltaPos = box2TargetTrans(box2_deltaPos);
                         target2Pos += box2_deltaPos;
-                        Debug.Log("좌표재설정: " + target2Pos.ToString());
+                        Debug.Log("좌표 재설정 : " + target2Pos.ToString());
                         moveBoxTarget = target2Pos;
+                  
 
-                        Debug.Log($"box2 다음 위치 경로 계획 완료 : {ToString(box2_deltaPos)}");
-                        Debug.Log($"box2 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
-                        gameobject.transform.SetParent(LoadFixedPart.transform);
-                        isResetTarget = true;
+                        Debug.Log($"box2 다음 위치 경로 계획 완료  : {ToString(box2_deltaPos)}");
+                        Debug.Log($"box2 로드 움직임 계산 완료  : {ToString(moveBoxTarget)}");
+                 
+                            gameobject.transform.SetParent(LoadFixedPart.transform);
+                        isResetTarget3= true;
                     }
 
                    
                 }
+      
             }
+          
             yield return null;
         }
 
@@ -382,7 +426,7 @@ namespace box_Location
 
         IEnumerator CoMoveLMCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
         {
-            isConveyorMove = true;
+            //isConveyorMove = true;
             float elapsedTime = 0f;
             while (elapsedTime < movingTime)
             {
@@ -401,7 +445,8 @@ namespace box_Location
                 print("LoadSystem_LMTransfer - 대기지점으로 이동합니다...");
             }
             LMTransfer.GetComponent<DataRead_Cyl>().cylinderStatusData.usageCount += 1;
-            isConveyorMove = false;
+            //isConveyorMove = false;
+            print("LM 적재 완료");
         }
 
         IEnumerator CoMoveXCylinder(Vector3 _originPos, Vector3 _targetPos, float movingTime)
@@ -494,41 +539,47 @@ namespace box_Location
                     yield return new WaitForSeconds(1f);
                 }
                 Belt.transform.localPosition = _targetPos;
-                isBeltMoving = false;
+               isBeltMoving = false;
                
             }
             Belt.transform.localPosition = _originPos;
 
-            if (loadCheck.isBoxLoading[0])
+            if (loadBox.isBoxLoading[0])
             {
-                
+               
                 cylinderTime = box1MoveTime;
+                
                 print(cylinderTime + "s");
                 isbox2 = false;
-                box1_deltaPos = box1TargetTrans(box1_deltaPos);
-                nowPos = loadCheck.colliedBox1.transform.position;
-                target1Pos = nowPos - box1_Origin.position;
-                target1Pos = transAxis(target1Pos);
-                target1Pos += box1_deltaPos;
-                moveBoxTarget = target1Pos;
-                
+                if (!isResetTarget1)
+                {
+                    box1_deltaPos = box1TargetTrans(box1_deltaPos);
+                    nowPos = loadBox.colliedBox1.transform.position;
+                    target1Pos = nowPos - box1_Origin.position;
+                    target1Pos = transAxis(target1Pos);
+                    target1Pos += box1_deltaPos;
+                    moveBoxTarget = target1Pos;
 
-                Debug.Log($"box1 다음 위치 경로 계획 완료 : {ToString(box1_deltaPos)}");
-                 Debug.Log($"box1 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
+
+                    Debug.Log($"box1 다음 위치 경로 계획 완료 : {ToString(box1_deltaPos)}");
+                    Debug.Log($"box1 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
+                    isResetTarget1 = true;
+                }
             }
-            else if (loadCheck.isBoxLoading[1])
+            else if (loadBox.isBoxLoading[1])
             {
+
                 isbox2 = true;
                 cylinderTime=box2MoveTime;
                 print(cylinderTime+"s");
 
 
 
-                GameObject gameobject = loadCheck.colliedBox2;
+                GameObject gameobject = loadBox.colliedBox2;
 
 
                 nowPos = gameobject.transform.position;
-                if (!isRotate)
+                if (!isRotate&&!isResetTarget2)
                 {
                     box2_deltaPos = box2TargetTrans(box2_deltaPos);
                     target2Pos = nowPos - box2Origin_L.position;
@@ -537,6 +588,7 @@ namespace box_Location
                     moveBoxTarget = target2Pos;
                     Debug.Log($"box2 다음 위치 경로 계획 완료 : {ToString(box2_deltaPos)}");
                     Debug.Log($"box2 로드 움직임 계산 완료 : {ToString(moveBoxTarget)}");
+                    isResetTarget2 = true;
 
                 }
            

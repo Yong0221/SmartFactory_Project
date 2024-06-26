@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading;
 using ActUtlType64Lib;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.UI;
 using static mxComponent.MxComponent;
+using static UnityEditor.Progress;
 
 namespace mxComponent
 {
@@ -40,6 +42,7 @@ namespace mxComponent
         public ConveyorData conveyor;
         public ConveyorCylinder pushCylinder;
         public ConveyorCylinder gateCylinder;
+        public Sensor ditecdSensor_C;
         public Sensor arriveSensor_C;
         public Sensor alignSensor_C;
         public Sensor closeSensor_C;
@@ -47,6 +50,7 @@ namespace mxComponent
         public CylinderSensor pushCyl_B;
         public CylinderSensor gateCyl_F;
         public CylinderSensor gateCyl_B;
+        public ConveyorSensor Belt_target;
 
         [Header("연결_로드시스템")]
         public Sensor endSensor_L;
@@ -70,6 +74,9 @@ namespace mxComponent
         int ditecdal = 0;
         int ditecdgate_B = 0;
         int ditecdclose = 0;
+        int ditecdobject = 0; //06.21/10:10
+        int start = 0;//06.21/10:22
+        int stopbtn = 0;
         private void Awake()//인스턴스 지정
         {
             if (instance == null)
@@ -157,6 +164,42 @@ namespace mxComponent
                 datasend = 0;
                 ditecdclose++;
             }
+            if (ditecdSensor_C.isObjectDetected && ditecdobject <3) //3회 스캔 /물품 확인 스캔//06.21/10:11
+            {
+                    ditecd = 0;
+                    datasend = 0;
+                    ditecdobject++;
+                    print("물품 감지");
+            }
+            if (connection == Connection.Connected && start < 3)//연결시 스캔 /센서 초기값으로 변경//06.21/10:23
+            {
+                SetDevice("X5", 1);//시작시 릴레이 리셋
+                SetDevice("X6", 0);
+                SetDevice("X99", 0);
+                SetDevice("X0", 0);
+                SetDevice("X1", 0);
+                SetDevice("X2", 0);
+                SetDevice("X3", 0);
+                SetDevice("X4", 0);
+                start ++;
+                print("센서 초기화");
+                if (connection == Connection.Connected && ditecdSensor_C.isObjectDetected) 
+                {
+                    SetDevice("X6", 1);
+                }
+            }
+            if ( Belt_target.isObjectDetected)//컨베이어 도착시 스캔//06.21/11:11
+            {
+                ditecd = 0;
+                datasend = 0;
+                //도착시 변수 초기값으로
+                ditecdobject=0;
+                ditecdclose = 0;
+                ditecdgate_B = 0;
+                ditecdal = 0;
+                ditecdar = 0;
+
+            }
         }
         IEnumerator GetTotalDeviceData()                                     //PLC 포트번호 GetDevice로 지정
          {
@@ -176,11 +219,14 @@ namespace mxComponent
 
                     gateCylinder.plcInputValue = new_ydata[30] - 48; //Y30
 
+                    
                     arriveSensor_C.plcInputValue = new_xdata[1]-48; //X1
                     alignSensor_C.plcInputValue = new_xdata[2]-48; //X2
                     closeSensor_C.plcInputValue = new_xdata[3] - 48; //X3
                     endSensor_L.plcInputValue = new_xdata[4] - 48; //X4
-    
+                    ditecdSensor_C.plcInputValue = new_xdata[6] - 48; //X6
+
+
                     xTransfer.plcInputValues[0] = new_ydata[40] - 48; //Y40
                     xTransfer.plcInputValues[1] = new_ydata[41] - 48; //Y41
 
@@ -235,6 +281,7 @@ namespace mxComponent
                         print("[PLC] PLC 연결이 해지되었습니다.");
                         log.text = "PLC 연결이 해지되었습니다.";
                         connection = Connection.Disconnected;
+                        start = 0;//06.21 /11:41
                     }
                     else
                     {
@@ -295,11 +342,11 @@ namespace mxComponent
 
                     if (returnValue != 0)
                     {
-                    if (ditecd == 0)//06.19/14:11
+                    if (ditecd <3)//06.19/14:11
                     {
                         print(returnValue.ToString("X"));
                         print("데이터 센서");
-                        ditecd=1;//06.19/14:11
+                        ditecd++;//06.19/14:11
                     }
                     }
                         
@@ -334,8 +381,11 @@ namespace mxComponent
                 stopBtn.image.color = Color.white;
 
                     SetDevice("X0", 1);
+                SetDevice("X5", 0);
+
                 print("[PLC] PLC 연동을 시작합니다.");
                 datasend = 0;
+                ditecd = 0;
                 }
             else
                 {
@@ -349,6 +399,8 @@ namespace mxComponent
             startBtn.image.color = Color.white;
             stopBtn.image.color = Color.red;
             SetDevice("X5", 1);
+                SetDevice("X0", 0);
+
                 print("[PLC] PLC 연동을 중지합니다.");
                 datasend = 0;
 
@@ -360,20 +412,33 @@ namespace mxComponent
          }
         public void OnEmergencyStopBtnClkEvent()
         {
-            if (connection == Connection.Connected)
+            if (connection == Connection.Connected)   //06.19/15:25
             {
-                startBtn.image.color = Color.white;
-                stopBtn.image.color = Color.red;
-                emergencyBtn.image.color = Color.red;
+                switch (stopbtn)
+                {
+                    case 0:
+                        startBtn.image.color = Color.white;
+                        stopBtn.image.color = Color.white;
+                        emergencyBtn.image.color = Color.red;
 
-                SetDevice("X99", 1);
-                print("[PLC][Alert] PLC 비상 정지 버튼이 활성화되었습니다.");
-                datasend = 0;
+                        SetDevice("X99", 1);
+                        print("[PLC][Alert] PLC 비상 정지 버튼이 활성화되었습니다.");
+                        datasend = 0;
+                        ditecd = 0;
+                        stopbtn = 1;
+                        break;
+                    case 1:
+                        startBtn.image.color = Color.white;
+                        stopBtn.image.color = Color.white;
+                        emergencyBtn.image.color = Color.white;
 
-            }
-            else
-            {
-                SetDevice("X99", 0);
+                        SetDevice("X99", 0);
+                        print("[PLC][Alert] PLC 비상 정지 버튼이 해제되었습니다.");
+                        datasend = 0;
+                        ditecd = 0;
+                        stopbtn = 0;
+                        break;
+                }
             }
         }
         IEnumerator InitPosition()
