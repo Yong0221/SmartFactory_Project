@@ -8,7 +8,10 @@ public class loadBox : MonoBehaviour
     public GameObject colliedBox2;
     public float box1Count;
     public float box2Count;
+<<<<<<< HEAD
     public bool once;
+=======
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
 
     void Start()
     {
@@ -31,11 +34,15 @@ public class loadBox : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Box1"))
         {
+<<<<<<< HEAD
             if (once)
             {
                 box1Count++;
                 once = false;
             }
+=======
+            box1Count++;
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
             colliedBox1 = collision.gameObject;
             if (collision.transform.parent == null)
                 collision.transform.SetParent(loadFixedPart);
@@ -48,11 +55,15 @@ public class loadBox : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Box2"))
         {
+<<<<<<< HEAD
             if (once)
             {
                 box2Count++;
                 once = false;
             }
+=======
+            box2Count++;
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
             colliedBox2 = collision.gameObject;
             if (collision.transform.parent == null)
                 collision.transform.SetParent(loadFixedPart);

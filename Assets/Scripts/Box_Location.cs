@@ -10,6 +10,7 @@ namespace box_Location
 {
     public class Box_Location : MonoBehaviour
     {
+<<<<<<< HEAD
         public bool isResetTarget1;
         public bool isResetTarget2;
         public bool isResetTarget3;
@@ -19,6 +20,13 @@ namespace box_Location
         public bool isCylinderBackward;
         public bool isbox2;
         public bool isRotate;
+=======
+        bool isResetTarget;
+        int box2Mode;
+        public bool isCylinderBackward;
+        bool isbox2;
+        bool isRotate;
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
         public bool isBackwardSensor;
         public bool isBeltMoving;
         public Box_Location instance;
@@ -178,10 +186,13 @@ namespace box_Location
 
         public void CylinderForwardBtnClkEvnt()
         {
+<<<<<<< HEAD
             loadBox.once = true;
             isResetTarget1 = false;
             isResetTarget2 = false;
             isResetTarget3 = false;
+=======
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
             isCylinderBackward = false;
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
@@ -194,12 +205,20 @@ namespace box_Location
 
         public void CylinderBackwardBtnClkEvnt()
         {
+<<<<<<< HEAD
 
             /*if (loadBox.box2Count == 1)
                 loadBox.box2Count = 24;
             else if (loadBox.box1Count == 1)
                 loadBox.box1Count = 25;           //층 변환 테스트모드
 
+=======
+           
+            /*if (loadBox.box2Count == 1)
+                loadBox.box2Count = 24;
+            else if (loadBox.box1Count == 1)
+                loadBox.box1Count = 25;           //층 변환 테스트 모드
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
 */
             robotTarget = Load_Origin;
             robotTarget.x = -0.0253f;
@@ -219,6 +238,13 @@ namespace box_Location
                     box1.transform.SetParent(palletLoad1.transform);
                 }
                
+<<<<<<< HEAD
+=======
+
+
+                StartCoroutine(Timer(rb, loadCylinderTime));
+                
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
               
                 loadBox.isBoxLoading[0] = false;
             }
@@ -226,6 +252,7 @@ namespace box_Location
             {
                 GameObject box2 = loadBox.colliedBox2;
                 Rigidbody rb = box2.GetComponent<Rigidbody>();
+<<<<<<< HEAD
                 rb.constraints = RigidbodyConstraints.None;
                      if (!palletLoad2.GetComponent<Pallet_Loading>().isloading)
                 {
@@ -236,6 +263,15 @@ namespace box_Location
 
 
 
+=======
+              
+                    rb.constraints = RigidbodyConstraints.None;
+                
+     
+                StartCoroutine(Timer(rb, loadCylinderTime));
+             
+              
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
                 loadBox.isBoxLoading[1] = false;
                
              
@@ -247,9 +283,15 @@ namespace box_Location
             rb.isKinematic = false;
             yield return new WaitForSeconds(delay);
             rb.isKinematic = true;
+<<<<<<< HEAD
 
 
 
+=======
+      
+              
+        
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
         }
 
         public void beltOnBtnClkEvnt()
@@ -294,16 +336,24 @@ namespace box_Location
 
             float floorBoxEA;
             floorBoxEA = loadBox.box2Count % 24;//한층의 박스 갯수 24개임
+<<<<<<< HEAD
             print("현재 층 박스 개수 : "+floorBoxEA );
             print("박스 총 개수 : "+loadBox.box2Count);
 
             _box2Target.y -= box2Size[0];
+=======
+            _box2Target.y -= box2Size[0] + 0.005f;
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
             if (floorBoxEA == 1)
             {
 
                 _box2Target.x = 0;
                 _box2Target.y = 0;
+<<<<<<< HEAD
                 _box2Target.z -= box2Size[2]+0.005f;// XY 위치 초기화 및 Z충 한칸 이동
+=======
+                _box2Target.z -= box2Size[2];// XY 위치 초기화 및 Z충 한칸 이동
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
                 if (loadBox.box2Count == 1)
                     _box2Target = Vector3.zero;
                 print("층 변환 : " + floorBoxEA);
@@ -551,6 +601,7 @@ namespace box_Location
                 
                 print(cylinderTime + "s");
                 isbox2 = false;
+<<<<<<< HEAD
                 if (!isResetTarget1)
                 {
                     box1_deltaPos = box1TargetTrans(box1_deltaPos);
@@ -559,6 +610,15 @@ namespace box_Location
                     target1Pos = transAxis(target1Pos);
                     target1Pos += box1_deltaPos;
                     moveBoxTarget = target1Pos;
+=======
+                box1_deltaPos = box1TargetTrans(box1_deltaPos);
+                nowPos = loadBox.colliedBox1.transform.position;
+                target1Pos = nowPos - box1_Origin.position;
+                target1Pos = transAxis(target1Pos);
+                target1Pos += box1_deltaPos;
+                moveBoxTarget = target1Pos;
+                
+>>>>>>> 7400ff6e079360163c7d9584eab358354e17346e
 
 
                     Debug.Log($"box1 다음 위치 경로 계획 완료 : {ToString(box1_deltaPos)}");

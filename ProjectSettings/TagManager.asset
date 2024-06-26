@@ -9,6 +9,7 @@ TagManager:
   - Pallet1
   - Pallet2
   - facilities
+  - RobotManager
   layers:
   - Default
   - TransparentFX
